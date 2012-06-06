@@ -22,13 +22,13 @@ grunt-context supports arguments. The arguments are broken down as follows:
 
 context:*name*:*task*:*arguments*
 
-+ name: The name context to use
-+ task: A single task or tasklist to run
++ name: The name of the context to use
++ task: A single task or task list to run
 + arguments: The arguments to apply to a single task, these are ignored when a task list is used.
 
 ### Overrides
 
-Tasks you which to provide a context for should be defined inside the context object and under the options key inside your main config. Properties for a specific task will then be combined with any defined outside of the context object.
+Tasks you wish to provide a context for should be defined inside the context object and under the options key inside your main config. Properties for a specific task will then be combined with any defined outside of the context object.
 
 Example grunt file with contexts defined:
 
