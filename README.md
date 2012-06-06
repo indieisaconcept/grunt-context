@@ -33,7 +33,6 @@ Tasks you wish to provide a context for should be defined inside the context obj
 Example grunt file with contexts defined:
 
 ```javascript
-
 // ... grunt file contents
 
     // =====================
@@ -72,29 +71,24 @@ Example grunt file with contexts defined:
     }
 
 // ... even more grunt file contents
-
 ```
 
 The above configuration would result in the following config when grunt-context is run with the context set to "development".
 
 ```javascript
-
     sometask: {
         prop1: 'some development value',
         prop2: 'some original value'        
         prop3: 'some development value',
         prop4: 'some development value'
     },
-
 ```
 
 Using the approach above you could also define the following tasks inside your grunt.js and when run the default task list for the context will run if it exists.
 
 ```javascript
-
     grunt.registerTask('default', 'context:development');
     grunt.registerTask('release', 'context:production');
-
 ```    
 
 ### Tasks
@@ -102,11 +96,9 @@ Using the approach above you could also define the following tasks inside your g
 Tasks can also be defined against a context, in the same way in which you would normally use grunt.registerTask you can now directly associate tasks to a specific context.
 
 ```javascript
-
     tasks: {
         'default': 'sometask'
     },
-
 ```
 
 A "default" task should always be defined as per normal grunt task convention.
