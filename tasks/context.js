@@ -126,7 +126,7 @@ module.exports = function(grunt) {
                         if (mainConfig) {
 
                             status = '[DONE]';
-                            taskConfig = helper('propertyOverride', taskConfig, mainConfig);
+                            taskConfig = helper('propertyOverride', mainConfig, taskConfig);
 
                         }
 
@@ -183,7 +183,7 @@ module.exports = function(grunt) {
         });
 
         // remove duplicates
-        keya = _.uniq(keys);
+        keys = _.uniq(keys);
 
         // override the individual configuration values
         keys.forEach(function(prop) {
@@ -191,7 +191,8 @@ module.exports = function(grunt) {
             var overrideValue = namespace.get(data, prop);
 
             // only override if a value exists
-            if (overrideValue) {
+            if (!_.isUndefined(overrideValue)) {
+                grunt.log.verbose.writeln('> OVERRIDE ' + prop + ' => ' + overrideValue);
                 namespace.set(source, prop, overrideValue);
             }
 
