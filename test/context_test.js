@@ -21,14 +21,45 @@ var grunt = require('grunt');
 */
 
 exports['context'] = {
-  setUp: function(done) {
-    // setup here
-    done();
-  },
-  'helper': function(test) {
-    test.expect(1);
-    // tests here
-    test.equal(grunt.helper('context'), 'context!!!', 'should return the correct value.');
-    test.done();
-  }
+
+    setUp: function(done) {
+        // setup here
+        done();
+    },
+
+    'helper': function(test) {
+
+        var destination = {
+                prop1: 'some original value',
+                prop2: 'some original value'
+            },
+
+            // apply these properties to the destination
+            override = {
+                prop1: 'some development value',
+                prop3: 'some development value',
+                prop4: 'some development value'
+            },
+
+            // merged result
+            expected = {
+                prop1: 'some development value',
+                prop2: 'some original value',
+                prop3: 'some development value',
+                prop4: 'some development value'
+            },
+
+            keys = Object.keys(expected);
+
+        result = grunt.helper('propertyOverride', destination, override);
+
+        test.expect(keys.length);
+
+        keys.forEach(function (key) {
+            test.equal(result[key], expected[key], 'should return the correct value.');
+        });
+
+        test.done();
+    }
+
 };
