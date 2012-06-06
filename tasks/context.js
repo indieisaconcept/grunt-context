@@ -46,7 +46,7 @@ module.exports = function(grunt) {
             msg = {
                 'error': 'An error has occured',
                 'conflict': 'Task list has the same name as an existing task',
-                'tasklist': 'No valid tasklist found',
+                'tasklist': 'No valid task list found',
                 'task': 'No valid task found',
                 'nested': 'Nesting of ' + name + ' is currently not supported'
             },
@@ -72,12 +72,12 @@ module.exports = function(grunt) {
             error = !error && conflict && msg.conflict   || error;
             error = !error && nested && msg.nested       || error;
             error = !error && !taskList && msg.tasklist  || error;
-            error = !error && !task && msg.task    || error;
+            error = !error && !task && msg.task          || error;
                 
             // fallback
             error = error || msg.error;
 
-            grunt.fatal(msg);
+            grunt.fatal(error);
 
         // b) apply config overrides
         } else {
