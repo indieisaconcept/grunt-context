@@ -9,6 +9,13 @@
 module.exports = function(grunt) {
 
     // ==========================================================================
+    // GLOBAL
+    // ==========================================================================
+
+    var utils = typeof grunt.utils !== 'undefined' ? grunt.utils : grunt.util;
+        _ = utils._;
+
+    // ==========================================================================
     // TASKS
     // ==========================================================================
 
@@ -17,10 +24,8 @@ module.exports = function(grunt) {
         // ensure a context config exists
         this.requiresConfig(this.name + '.' + context);
 
-        var _ = grunt.utils._,
-
             // task shortcuts
-            name = this.name,
+        var name = this.name,
             label = name + '.' + context,
             helper = grunt.helper,
 
@@ -46,7 +51,7 @@ module.exports = function(grunt) {
             msg = {
                 'error': 'An error has occured',
                 'conflict': 'Task list has the same name as an existing task',
-                'tasklist': 'No valid task list found',
+                'tasklist': 'No "default" task found for context',
                 'task': 'No valid task found',
                 'nested': 'Nesting of ' + name + ' is currently not supported'
             },
@@ -82,7 +87,7 @@ module.exports = function(grunt) {
         // b) apply config overrides
         } else {
 
-            grunt.log.writeln(grunt.utils.linefeed + label.toUpperCase() + ' OVERRIDE' + grunt.utils.linefeed);
+            grunt.log.verbose.writeln(grunt.utils.linefeed + label.toUpperCase() + ' OVERRIDE' + grunt.utils.linefeed);
 
             taskList = taskArgs && taskOrTasklist || taskList;
 
@@ -121,7 +126,7 @@ module.exports = function(grunt) {
                         if (mainConfig) {
 
                             status = '[DONE]';
-                            taskConfig = helper('propertyOverride')(taskConfig, mainConfig);
+                            taskConfig = helper('propertyOverride', taskConfig, mainConfig);
 
                         }
 
@@ -131,7 +136,7 @@ module.exports = function(grunt) {
 
                     }
 
-                    grunt.log.writeln('> ' + status + ' ' + taskName);
+                    grunt.log.verbose.writeln('> ' + status + ' ' + taskName);
 
                 });
 
