@@ -75,7 +75,7 @@ Example grunt file with contexts defined:
 
 ```
 
-The above configuration would result in the following config when grunt-context which the context set to "development" is run.
+The above configuration would result in the following config when grunt-context is run with the context set to "development".
 
 ```javascript
 
