@@ -20,7 +20,7 @@ grunt.loadNpmTasks('grunt-context');
 
 grunt-context supports arguments. The arguments are broken down as follows:
 
-contenxt:name:task:arguments
+context:*name*:*task*:*arguments*
 
 + name: The name context to use
 + task: A single task or tasklist to run
