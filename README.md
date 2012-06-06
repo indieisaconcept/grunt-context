@@ -40,7 +40,7 @@ Example grunt file with contexts defined:
     // GLOBAL CONFIG
     // =====================
 
-    someplugin: {
+    sometask: {
         prop1: 'some original value',
         prop2: 'some original value'
     },
@@ -55,7 +55,7 @@ Example grunt file with contexts defined:
 
             options: {
 
-                someplugin: {
+                sometask: {
                     prop1: 'some development value',
                     prop3: 'some development value',
                     prop4: 'some development value'
@@ -64,7 +64,7 @@ Example grunt file with contexts defined:
             },
 
             tasks: {
-                'default': 'someplugin'
+                'default': 'sometask'
             }
 
         }
@@ -79,7 +79,7 @@ The above configuration would result in the following config when grunt-context 
 
 ```javascript
 
-    someplugin: {
+    sometask: {
         prop1: 'some development value',
         prop2: 'some original value'        
         prop3: 'some development value',
@@ -104,7 +104,7 @@ Tasks can also be defined against a context, in the same way in which you would 
 ```javascript
 
     tasks: {
-        'default': 'someplugin'
+        'default': 'sometask'
     },
 
 ```
