@@ -12,7 +12,7 @@ module.exports = function(grunt) {
     // TASKS
     // ==========================================================================
 
-    grunt.registerTask('context', 'Override config based on context', function(/* String */ context, /* String */ taskOrPlugin) {
+    grunt.registerTask('context', 'Override config based on context', function(/* String */ context, /* String */ taskOrTasklist) {
 
         // ensure a context config exists
         this.requiresConfig(this.name + '.' + context);
@@ -27,25 +27,25 @@ module.exports = function(grunt) {
             // alias for accessing common context
             // items
             config = grunt.config(name)[context],
-            tasks = config.task || {},
-            plugins = config.plugin || {},
+            tasks = config.tasks || {},
+            options = config.options || {},
 
             // determine if we have a conflict as taskslists should not be
-            // named the same as plugins
-            taskList = taskOrPlugin && tasks[taskOrPlugin],
-            taskPlugin = taskOrPlugin && (plugins[taskOrPlugin] || grunt.config(taskOrPlugin)),
-            conflict = (!_.isUndefined(taskList) && !_.isUndefined(taskPlugin)),
+            // named the same as task
+            taskList = taskOrTasklist && tasks[taskOrTasklist],
+            task = taskOrTasklist && (options[taskOrTasklist] || grunt.config(taskOrTasklist)),
+            conflict = (!_.isUndefined(taskList) && !_.isUndefined(task)),
 
             // gather current task including arguments
             // which may have been passed
             taskArgs = !conflict &&
-                       taskPlugin &&
+                       task &&
                        this.nameArgs.replace(label.replace('.', ':') + ':', '') || null, // [JB] could probably be neater
 
             // possible error scenarios
             msg = {
                 'error': 'An error has occured',
-                'conflict': 'Task list has the same name as a plugin',
+                'conflict': 'Task list has the same name as an existing task',
                 'tasklist': 'No valid tasklist found',
                 'task': 'No valid task found',
                 'nested': 'Nesting of ' + name + ' is currently not supported'
@@ -60,11 +60,11 @@ module.exports = function(grunt) {
         // ensure that there in no nested context tasks
         nested = _.isString(taskList) && taskList.indexOf() !== -1 ? true : false;
 
-        // a) conflict: task is the same name as a plugin or
+        // a) conflict: has the same name as a task or tasklist
         //    taskList: no task list defined including default
-        //    taskPlugin: no task plugin defined
+        //    task: no task defined
 
-        invalid = (nested || conflict ||(_.isUndefined(taskList) && _.isUndefined(taskPlugin)));
+        invalid = (nested || conflict ||(_.isUndefined(taskList) && _.isUndefined(task)));
 
         if (invalid) {
 
@@ -72,7 +72,7 @@ module.exports = function(grunt) {
             error = !error && conflict && msg.conflict   || error;
             error = !error && nested && msg.nested       || error;
             error = !error && !taskList && msg.tasklist  || error;
-            error = !error && !taskPlugin && msg.task    || error;
+            error = !error && !task && msg.task    || error;
                 
             // fallback
             error = error || msg.error;
@@ -84,7 +84,7 @@ module.exports = function(grunt) {
 
             grunt.log.writeln(grunt.utils.linefeed + label.toUpperCase() + ' OVERRIDE' + grunt.utils.linefeed);
 
-            taskList = taskArgs && taskOrPlugin || taskList;
+            taskList = taskArgs && taskOrTasklist || taskList;
 
             // [JB] Consider moving this to earlier so that
             //      possible errors for pipleline are handled
@@ -104,40 +104,40 @@ module.exports = function(grunt) {
 
                 taskList.split(/[,\s]+/).forEach(function (task) {
 
-                    // ensure the plugin name is obtained with the arguments ommitted
-                    var plugin = task.split(':')[0],
-                        pluginConfig = plugins[plugin],
+                    // ensure the task name is obtained with the arguments ommitted
+                    var taskName = task.split(':')[0],
+                        taskConfig = options[taskName],
 
-                        mainConfig = grunt.config(plugin),
+                        mainConfig = grunt.config(taskName),
                         status = '[SKIP]',
 
                         override;
 
                     // a) override the main config for the
-                    //    plugin with the current context
+                    //    task with the current context
                     //    config
-                    if (pluginConfig) {
+                    if (taskConfig) {
 
                         if (mainConfig) {
 
                             status = '[DONE]';
-                            pluginConfig = helper('propertyOverride')(pluginConfig, mainConfig);
+                            taskConfig = helper('propertyOverride')(taskConfig, mainConfig);
 
                         }
 
                         // promote this to be the main config for
-                        // this plugin
-                        grunt.config(plugin, pluginConfig);
+                        // this task
+                        grunt.config(taskName, taskConfig);
 
                     }
 
-                    grunt.log.writeln('> ' + status + ' ' + plugin);
+                    grunt.log.writeln('> ' + status + ' ' + taskName);
 
                 });
 
                 taskList = taskArgs || taskList;
 
-                // run the current taskList or plugin task
+                // run the current taskList or task
                 grunt.task.run(taskList);
 
             }
