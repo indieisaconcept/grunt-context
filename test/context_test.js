@@ -49,9 +49,9 @@ exports['context'] = {
                 prop4: 'some development value'
             },
 
-            keys = Object.keys(expected);
+            result = grunt.helper('propertyOverride', destination, override),
 
-        result = grunt.helper('propertyOverride', destination, override);
+            keys = Object.keys(expected);
 
         test.expect(keys.length);
 

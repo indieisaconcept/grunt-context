@@ -5,7 +5,6 @@
  * Copyright (c) 2012 "indieisaconcept" Jonathan Barnett
  * Licensed under the MIT license.
  */
-
 module.exports = function(grunt) {
 
     // ==========================================================================
@@ -56,6 +55,7 @@ module.exports = function(grunt) {
                 'nested': 'Nesting of ' + name + ' is currently not supported'
             },
 
+            invalid,
             error,
             nested;
 
