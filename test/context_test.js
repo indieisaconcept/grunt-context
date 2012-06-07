@@ -36,27 +36,71 @@ exports['context'] = {
 
             // apply these properties to the destination
             override = {
-                prop1: 'some development value',
-                prop3: 'some development value',
-                prop4: 'some development value'
+
+                first: {
+
+                    prop1: 'some development value',
+                    prop3: 'some development value',
+                    prop4: 'some development value'
+
+                },
+
+                second: {
+
+                    prop1: 'some other development value',
+                    prop5: 'some new development value'
+
+                },
+
+                third: {
+
+                    prop6: {
+                        some: {
+                            setting: 'off'
+                        }
+                    }
+
+                },
+
+                fourth: {
+
+                    prop1: 'test',
+                    prop6: {
+                        some: {
+                            setting: ['on', 'off']
+                        }
+                    }
+
+                }
+
             },
 
             // merged result
             expected = {
-                prop1: 'some development value',
+
+                prop1: 'test',
                 prop2: 'some original value',
                 prop3: 'some development value',
-                prop4: 'some development value'
+                prop4: 'some development value',
+                prop5: 'some new development value',
+                prop6: {
+                    some: {
+                        setting: ['on', 'off']
+                    }
+                }
+
             },
 
-            result = grunt.helper('propertyOverride', destination, override),
+            result = grunt.helper('propertyOverride', destination, override.first, override.second, override.third, override.fourth),
 
             keys = Object.keys(expected);
 
         test.expect(keys.length);
 
+        console.log(result);
+
         keys.forEach(function (key) {
-            test.equal(result[key], expected[key], 'should return the correct value.');
+            test.deepEqual(result[key], expected[key], 'should return the correct value.');
         });
 
         test.done();
