@@ -110,6 +110,55 @@ To run the default task for a context, this is possible using the following synt
 > grunt content:development:default
 ```
 
+## Typical Uses
+
+Depending upon the tasks you are using and the options provided you could structure your grunt.js file so that you can:
+
++ Enable code profiling whilst actively developing but remove it when doing a build for release
+
+```javascript
+> grunt context:development requirejs
+
+    // ... grunt file contents    
+
+    requirejs: {
+
+        js: {
+
+            pragmas: {
+                devExclude: false,
+                profileExclude: false,
+                remoteExclude: false
+            }
+
+        }
+
+    }
+
+    // ... grunt file contents    
+
+> grunt context:production requirejs
+
+    // ... grunt file contents    
+
+    requirejs: {
+
+        js: {
+
+            pragmas: {
+                devExclude: true,
+                profileExclude: true,
+                remoteExclude: true
+            }
+
+        }
+
+    }
+
+    // ... grunt file contents    
+
+```
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
 
@@ -119,6 +168,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 + Added support to propertyOverride helper to allow multiple overrides
 + Config overriding now based on the keys defined under context.name.options
 + Can now be run in conjuction with other tasks and still override configs
++ Added typical examples section to documentation
 
 ### 0.1.0
 + Initial Release
