@@ -97,8 +97,6 @@ exports['context'] = {
 
         test.expect(keys.length);
 
-        console.log(result);
-
         keys.forEach(function (key) {
             test.deepEqual(result[key], expected[key], 'should return the correct value.');
         });
