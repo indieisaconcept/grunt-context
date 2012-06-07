@@ -23,8 +23,8 @@ grunt-context supports arguments. The arguments are broken down as follows:
 context:*name*:*task*:*arguments*
 
 + name: The name of the context to use
-+ task: A single task or task list to run
-+ arguments: The arguments to apply to a single task, these are ignored when a task list is used.
++ task: A task for the context
++ arguments: The arguments to apply to the task if it's a function
 
 ### Overrides
 
@@ -101,7 +101,7 @@ Tasks can also be defined against a context, in the same way in which you would 
     },
 ```
 
-A "default" task should always be defined as per normal grunt task convention.
+When run any config options for the current context will be overriden. If a default task is found this will also be run.
 
 To run the default task for a context, this is possible using the following syntax:
 
@@ -118,6 +118,11 @@ This will either run a single task or either a task list.
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
 
 ## Release History
+
+### 0.2.0
++ Added support to propertyOverride helper to allow multiple overrides
++ Config overriding now based on the keys defined under context.name.options
++ Can now be run in conjuction with other tasks and still override configs
 
 ### 0.1.0
 + Initial Release
