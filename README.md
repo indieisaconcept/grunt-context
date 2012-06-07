@@ -112,8 +112,6 @@ To run the default task for a context, this is possible using the following synt
 
 This will either run a single task or either a task list.
 
-*Note:* Ensure that you do not duplicate task names.
-
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
 
