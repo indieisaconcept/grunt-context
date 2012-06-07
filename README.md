@@ -110,8 +110,6 @@ To run the default task for a context, this is possible using the following synt
 > grunt content:development:default
 ```
 
-This will either run a single task or either a task list.
-
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
 
