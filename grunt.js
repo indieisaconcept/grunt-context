@@ -27,10 +27,9 @@ module.exports = function(grunt) {
                 node: true,
                 es5: true
             },
-            globals: {
-                _: true
-            }
+            globals: {}
         }
+
     });
 
     // Load local tasks.
