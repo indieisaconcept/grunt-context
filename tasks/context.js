@@ -32,7 +32,7 @@ module.exports = function(grunt) {
                         error = plugin.errors.type[currentError] || defaultError,
                         handler = error.handler || defaultError.handler,
                         message = error.message || defaultError.message,
-                        code = error.code || defaultErrorcode;
+                        code = error.code || defaultError.code;
 
                     handler = _.isString(handler) ? grunt[handler] : handler;
 
@@ -177,7 +177,7 @@ module.exports = function(grunt) {
                 taskArgs = adhocOverride ? _.without(taskArgs, adhocOverride) : taskArgs;
 
                 // prevent context nestings
-                error = (_.isString(taskList) && taskList.indexOf(name + ':') !== -1) && 'nested';
+                error = (_.isString(taskList) && taskList.indexOf(name + ':') != -1) && 'nested';
 
                 if (error) {
                     plugin.helper.local.error(error);
@@ -213,7 +213,7 @@ module.exports = function(grunt) {
                 // the taskList if it is a function or if a run task
                 // is reqyuire
                 if (adhocOverride) {
-                    plugin.helper.external.override(adhocOverride);
+                    plugin.helper(adhocOverride);
                 }
 
                 // a) we have been passed a function
