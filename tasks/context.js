@@ -136,7 +136,7 @@ module.exports = function(grunt) {
             task: function(/* String */ context, /* String */ task) {
 
                     // task shortcuts
-                var name = this.name,
+                var name = 'context',
                     label = name + ':' + context,
 
                     // check for arguments passed which could
