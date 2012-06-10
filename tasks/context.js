@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 
             name: 'context config',
 
-            description: 'Allow config values to be override during task execution',
+            description: 'Allow config values to be overriden during task execution',
 
             // possible errors and the associated handler
             errors: {
