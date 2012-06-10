@@ -2,16 +2,15 @@ module.exports = function(grunt) {
 
     // Project configuration.
     grunt.initConfig({
+
         test: {
             files: ['test/**/*.js']
         },
+
         lint: {
             files: ['grunt.js', 'tasks/**/*.js', 'test/**/*.js']
         },
-        watch: {
-            files: '<config:lint.files>',
-            tasks: 'default'
-        },
+
         jshint: {
             options: {
                 curly: true,
@@ -26,8 +25,7 @@ module.exports = function(grunt) {
                 eqnull: true,
                 node: true,
                 es5: true
-            },
-            globals: {}
+            }
         }
 
     });

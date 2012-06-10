@@ -1,26 +1,6 @@
 var grunt = require('grunt');
 
-/*
-  ======== A Handy Little Nodeunit Reference ========
-  https://github.com/caolan/nodeunit
-
-  Test methods:
-    test.expect(numAssertions)
-    test.done()
-  Test assertions:
-    test.ok(value, [message])
-    test.equal(actual, expected, [message])
-    test.notEqual(actual, expected, [message])
-    test.deepEqual(actual, expected, [message])
-    test.notDeepEqual(actual, expected, [message])
-    test.strictEqual(actual, expected, [message])
-    test.notStrictEqual(actual, expected, [message])
-    test.throws(block, [error], [message])
-    test.doesNotThrow(block, [error], [message])
-    test.ifError(value)
-*/
-
-exports['context'] = {
+exports.context = {
 
     setUp: function(done) {
         // setup here
@@ -29,79 +9,59 @@ exports['context'] = {
 
     'helper': function(test) {
 
-        var destination = {
-                prop1: 'some original value',
-                prop2: 'some original value'
-            },
-
-            // apply these properties to the destination
+        var altOverride = {},
             override = {
 
-                first: {
-
-                    prop1: 'some development value',
-                    prop3: 'some development value',
-                    prop4: 'some development value'
-
+                lint: {
+                    files: ['tasks/**/*.js']
                 },
 
-                second: {
-
-                    prop1: 'some other development value',
-                    prop5: 'some new development value'
-
-                },
-
-                third: {
-
-                    prop6: {
-                        some: {
-                            setting: 'off'
-                        }
-                    }
-
-                },
-
-                fourth: {
-
-                    prop1: 'test',
-                    prop6: {
-                        some: {
-                            setting: ['on', 'off']
-                        }
-                    }
-
-                }
-
-            },
-
-            // merged result
-            expected = {
-
-                prop1: 'test',
-                prop2: 'some original value',
-                prop3: 'some development value',
-                prop4: 'some development value',
-                prop5: 'some new development value',
-                prop6: {
-                    some: {
-                        setting: ['on', 'off']
+                jshint: {
+                    options: {
+                        curly: false,
+                        eqeqeq: false,
+                        immed: false,
+                        latedef: false,
+                        newcap: false,
+                        noarg: false,
+                        sub: false,
+                        undef: false,
+                        boss: false,
+                        eqnull: false,
+                        node: false,
+                        es5: false
                     }
                 }
 
             },
 
-            result = grunt.helper('propertyOverride', destination, override.first, override.second, override.third, override.fourth),
+            tests,
+            helperName = 'context',
+            result = grunt.helper(helperName, override);
 
-            keys = Object.keys(expected);
+        // a) test normal object override
+        Object.keys(override).forEach(function (key) {
 
-        test.expect(keys.length);
+            Object.keys(override[key]).forEach(function (key2) {
+                test.deepEqual(result[key][key2], override[key][key2], 'should return the correct value.');
+            });
 
-        keys.forEach(function (key) {
-            test.deepEqual(result[key], expected[key], 'should return the correct value.');
         });
 
+        // b) test argument override boolean
+        result = grunt.helper(helperName, 'jshint.options.eqeqeq=false');
+        test.deepEqual(result.jshint.options.eqeqeq, false, 'should return the correct value.');
+
+        // c) test argument override array
+        result = grunt.helper(helperName, "lint.files=['test/**/*.js']");
+        test.deepEqual(result.lint.files, ['test/**/*.js'], 'should return the correct value.');
+
+        // d) test argument override object
+        result = grunt.helper(helperName, 'lint={}');
+        test.deepEqual(result.lint, {}, 'should return the correct value.');
+
         test.done();
+
     }
 
 };

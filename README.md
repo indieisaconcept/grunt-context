@@ -2,6 +2,8 @@
 
 The aim of this plugin is to allow the grunt config to be overridden based on the current context selected. This is particularly useful if builds need to be tailored based upon the deployment environment.
 
+**Note: As of version 0.3.0 the context task is now be used via the alias "config".**
+
 ## Getting Started
 Install this grunt plugin next to your project's [grunt.js gruntfile][getting_started] with: `npm install grunt-context`
 
@@ -20,11 +22,11 @@ grunt.loadNpmTasks('grunt-context');
 
 grunt-context supports arguments. The arguments are broken down as follows:
 
-context:*name*:*task*:*arguments*
+context: *name* : *task* : *arguments* 
 
-+ name: The name of the context to use
-+ task: A task for the context
-+ arguments: The arguments to apply to the task if it's a function
++ **name**: The name of the context to use
++ **task**: A task for the context
++ **arguments**: The arguments to apply to the task if it's a function
 
 ### Overrides
 
@@ -35,20 +37,12 @@ Example grunt file with contexts defined:
 ```javascript
 // ... grunt file contents
 
-    // =====================
-    // GLOBAL CONFIG
-    // =====================
-
     sometask: {
         prop1: 'some original value',
         prop2: 'some original value'
     },
 
     context: {
-
-        // =====================
-        // CONFIG OVERRIDES
-        // =====================
 
         development: {
 
@@ -103,12 +97,46 @@ Tasks can also be defined against a context, in the same way in which you would 
 
 When run any config options for the current context will be overriden. If a default task is found this will also be run.
 
-To run the default task for a context, this is possible using the following syntax:
+To run the "default" task for a context or another task list, this is possible using the following syntax:
+
+```javascript
+> grunt context:development         // run default task for development context
+> grunt context:development:test    // run test task for development context
+```
+
+## Supported Modes
+
+Config options can also be overriden using the following:
+
++ From the command line
+
+```javascript
+> grunt context:jshint.options.eqeqeq=false lint
+```
+
++ registerTask
+
+```javascript
+> grunt.registerTask('release', 'context:jshint.options.eqeqeq=false lint');
+```
+
++ Helper
+
+A helper is also available which will allow other tasks to support overriding config properties via the commandline or for general config overriding.
+
+```javascript
+
+grunt.helper('context', 'some.plugin.value=1234', {
+    some: {
+        plugin: {
+            value2: 5678
+        }
+    }
+}, 'someother.plugin.value=910');
 
 ```
-> grunt context:development or
-> grunt content:development:default
-```
+
+**The helper also has an alias of "config"**
 
 ## Typical Uses
 
@@ -138,6 +166,7 @@ Depending upon the tasks you are using and the options provided you could struct
     // ... grunt file contents    
 
 > grunt context:production requirejs
+> grunt config:production requirejs
 
     // ... grunt file contents    
 
@@ -163,6 +192,13 @@ Depending upon the tasks you are using and the options provided you could struct
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
 
 ## Release History
+
+### 0.3.0
+
++ Config alias added for context
++ Support for config options to be passed via the command line
++ Support to override helper to allow an alternative method of overriding to be applied to the passed in argunments
++ Updated tests
 
 ### 0.2.0
 + Added support to propertyOverride helper to allow multiple overrides
