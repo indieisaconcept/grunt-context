@@ -2,7 +2,7 @@
 
 The aim of this plugin is to allow the grunt config to be overridden based on the current context selected. This is particularly useful if builds need to be tailored based upon the deployment environment.
 
-**Note: As of version 0.3.0 the context task is now be used via the alias "config".**
+**Note: As of version 0.3.0 the context task can now be used via the alias "config".**
 
 ## Getting Started
 Install this grunt plugin next to your project's [grunt.js gruntfile][getting_started] with: `npm install grunt-context`
