@@ -122,7 +122,7 @@ Config options can also be overriden using the following:
 
 + Helper
 
-A helper is also available which will allow other tasks to support overriding config properties via the commandline or for general config overriding.
+A helper is also available which will allow other tasks to support overriding config properties via the command line or for general config overriding.
 
 ```javascript
 
@@ -149,39 +149,38 @@ Depending upon the tasks you are using and the options provided you could struct
 
     // ... grunt file contents    
 
-    requirejs: {
-
-        js: {
-
-            pragmas: {
-                devExclude: false,
-                profileExclude: false,
-                remoteExclude: false
+    context: {
+        development: {
+            requirejs: {
+                js: {
+                    pragmas: {
+                        devExclude: false,
+                        profileExclude: false,
+                        remoteExclude: false
+                    }
+                }
             }
-
         }
-
     }
 
     // ... grunt file contents    
 
 > grunt context:production requirejs
-> grunt config:production requirejs
 
     // ... grunt file contents    
 
-    requirejs: {
-
-        js: {
-
-            pragmas: {
-                devExclude: true,
-                profileExclude: true,
-                remoteExclude: true
+    context: {
+        production: {
+            requirejs: {
+                js: {
+                    pragmas: {
+                        devExclude: true,
+                        profileExclude: true,
+                        remoteExclude: true
+                    }
+                }
             }
-
         }
-
     }
 
     // ... grunt file contents    
@@ -195,9 +194,8 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ### 0.3.0
 
-+ Config alias added for context
++ Config alias added for context task and context helper
 + Support for config options to be passed via the command line
-+ Support to override helper to allow an alternative method of overriding to be applied to the passed in argunments
 + Updated tests
 
 ### 0.2.0
