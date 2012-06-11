@@ -1,6 +1,6 @@
 {
   "name": "grunt-context",
-  "description": "Give your grunt some some context.",
+  "description": "Give your grunt some some context,  provide named configs for common options and override individual options via the command line",
   "version": "0.3.2",
   "homepage": "https://github.com/indieisaconcept/grunt-context",
   "author": {
