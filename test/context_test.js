@@ -60,6 +60,10 @@ exports.context = {
         result = grunt.helper(helperName, 'lint={}');
         test.deepEqual(result.lint, {}, 'should return the correct value.');
 
+        // e) test argument override as test
+        grunt.task.run('config:jshint.options.eqeqeq=false');
+        test.deepEqual(grunt.config.get().jshint.options.eqeqeq, false, 'should return the correct value.');
+
         test.done();
 
     }
