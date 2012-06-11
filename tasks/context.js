@@ -66,14 +66,35 @@ module.exports = function(grunt) {
 
                 var keys = [],
                     overrides = _.chain(arguments).toArray(arguments).flatten(arguments, true).value(),
-                    process = grunt.config;
+                    process = grunt.config,
+                    cliParam = /([^=]*?)=(.*)/;
+
+                // a) check for arguments passed which could
+                //    be config properties requiring override
+                //
+                //      grunt context:dev:some.prop=12345:some.prop.test=12345
+                //
+                // b) check for objects which have been passed
+                //
+                //      {
+                //          jshint: {
+                //              options: {
+                //                  eqeqeq: false
+                //              }
+                //          }
+                //      }
+
+                overrides = _.filter(overrides, function (value) {
+
+                    return (_.isString(value) && value.match(cliParam) || _.isObject(value)) ? true : false;
+                });
 
                 overrides.forEach(function(currentSource, index) {
 
                     var temp,
                         newOverride = {},
                         adhocOverride = _.isString(currentSource) &&
-                                        currentSource.match(/([^=]*?)=(.*)/);
+                                        currentSource.match(cliParam);
 
                     if (adhocOverride) {
 
@@ -139,15 +160,6 @@ module.exports = function(grunt) {
                 var name = 'context',
                     label = name + ':' + context,
 
-                    // check for arguments passed which could
-                    // be config properties requiring override
-                    //
-                    //      grunt context:dev:some.prop=12345:some.prop.test=12345
-                    //
-                    adhocOverride = _.filter(this.args, function (prop) {
-                        return prop.match(/([^=]*?)=(.*)/) ? true : false;
-                    }),
-
                     // alias for accessing common context
                     // items
                     contextConfig = context &&
@@ -159,9 +171,10 @@ module.exports = function(grunt) {
 
                     // retrieve the current tasks for
                     // the context if they exist
-                    taskList = task && !!adhocOverride.indexOf(task) && contextTasks[task],
+                    taskList = task && contextTasks[task],
                     fallback = taskList ? false : true,
 
+                    overrides = [],
                     taskArgs = [],
                     error = false;
 
@@ -173,11 +186,8 @@ module.exports = function(grunt) {
                 // may have been passed, excluding context
                 taskArgs = _.isFunction(taskList) && _.rest(this.args, fallback ? 1 : 2) || taskArgs;
 
-                // remove addhoc overrides if they exist
-                taskArgs = adhocOverride ? _.without(taskArgs, adhocOverride) : taskArgs;
-
                 // prevent context nestings
-                error = (_.isString(taskList) && taskList.indexOf(name + ':') != -1) && 'nested';
+                error = (_.isString(taskList) && taskList.indexOf(name + ':') !== -1) && 'nested';
 
                 if (error) {
                     plugin.helper.local.error(error);
@@ -201,7 +211,7 @@ module.exports = function(grunt) {
 
                         status = '[DONE]';
                         taskConfig[task] = config;
-                        adhocOverride.push(taskConfig);
+                        overrides.push(taskConfig);
 
                     }
 
@@ -212,8 +222,9 @@ module.exports = function(grunt) {
                 // apply any adhoc config overrides prior to calling
                 // the taskList if it is a function or if a run task
                 // is reqyuire
-                if (adhocOverride) {
-                    plugin.helper(adhocOverride);
+                if (overrides) {
+                    console.log(overrides);
+                    plugin.helper(overrides);
                 }
 
                 // a) we have been passed a function

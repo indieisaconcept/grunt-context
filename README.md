@@ -192,6 +192,11 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+### 0.3.1
+
++ Override bug && lint fix
++ Tweaked helper so that it is standalone.
+
 ### 0.3.0
 
 + Config alias added for context task and context helper

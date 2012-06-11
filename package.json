@@ -1,7 +1,7 @@
 {
   "name": "grunt-context",
   "description": "Give your grunt some some context.",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "homepage": "https://github.com/indieisaconcept/grunt-context",
   "author": {
     "name": "Jonathan Barnett @indieisaconcept",
