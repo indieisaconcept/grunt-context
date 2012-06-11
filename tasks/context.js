@@ -85,7 +85,6 @@ module.exports = function(grunt) {
                 //      }
 
                 overrides = _.filter(overrides, function (value) {
-
                     return (_.isString(value) && value.match(cliParam) || _.isObject(value)) ? true : false;
                 });
 
@@ -222,8 +221,11 @@ module.exports = function(grunt) {
                 // apply any adhoc config overrides prior to calling
                 // the taskList if it is a function or if a run task
                 // is reqyuire
+                
+                // merge arguments passed to the task
+                overrides = overrides.concat(this.args);
+
                 if (overrides) {
-                    console.log(overrides);
                     plugin.helper(overrides);
                 }
 

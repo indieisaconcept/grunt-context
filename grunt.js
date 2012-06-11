@@ -26,6 +26,27 @@ module.exports = function(grunt) {
                 node: true,
                 es5: true
             }
+        },
+
+        context: {
+            development: {
+                options: {
+                    jshint: {
+                        options: {
+                            eqeqeq:false
+                        }
+                    }
+                }
+            },
+            production: {
+                options: {
+                    jshint: {
+                        options: {
+                            eqeqeq:true
+                        }
+                    }
+                }
+            }
         }
 
     });
