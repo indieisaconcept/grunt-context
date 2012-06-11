@@ -208,7 +208,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 + Updated tests
 
 ### 0.2.0
-+ Added support to propertyOverride helper to allow multiple overrides
++ Added support to helper to allow multiple overrides
 + Config overriding now based on the keys defined under context.name.options
 + Can now be run in conjuction with other tasks and still override configs
 + Added typical examples section to documentation
