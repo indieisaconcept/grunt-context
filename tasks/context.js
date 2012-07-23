@@ -19,7 +19,7 @@ module.exports = function(grunt) {
 
         plugin = {
 
-            name: 'context config',
+            name: 'context',
 
             description: 'Allow config values to be overriden during task execution',
 
