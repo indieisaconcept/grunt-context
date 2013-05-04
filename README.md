@@ -1,4 +1,7 @@
 [![build status](https://secure.travis-ci.org/indieisaconcept/grunt-context.png)](http://travis-ci.org/indieisaconcept/grunt-context)
+
+**Grunt as of version 0.4.0 now itself provides support to pass environment options (http://gruntjs.com/api/grunt.option). It's recommended that this is now used instead of this plugin.**
+
 # grunt-context
 
 The aim of this plugin is to allow the grunt config to be overridden based on the current context selected. This is particularly useful if builds need to be tailored based upon the deployment environment.
