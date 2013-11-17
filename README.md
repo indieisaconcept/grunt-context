@@ -225,3 +225,6 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 ## License
 Copyright (c) 2012 "indieisaconcept" Jonathan Barnett  
 Licensed under the MIT license.
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/indieisaconcept/grunt-context/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
